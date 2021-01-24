@@ -24,12 +24,16 @@ class RazerController():
         self.coef=1
 
     def set(self,r,g,b):
+        """ Instantly set color
+        """
         self.r = r
         self.g = g
         self.b = b
         self.update_color(self.r, self.g, self.b)
 
     def fade(self,r,g,b, step=1):
+        """ Fade from current color to target, gradually
+        """
         logging.pprint(f"Fading to {r},{g},{b} from {self.r},{self.g},{self.b}", 2)
         while True:
             logging.pprint(f"Fading to {r},{g},{b} from {self.r},{self.g},{self.b}", 3)
@@ -49,6 +53,8 @@ class RazerController():
             if(r == self.r and g == self.g and b==self.b): return
 
     def wave(self):
+        """ Simple wave effect
+        """
         while True:
             for i in range(0,255,1):
                 c = ChromaColor(i,30,30)
@@ -56,6 +62,8 @@ class RazerController():
                 self.app.Headset.setStatic(c)
 
     def update_color(self, r, g, b):
+        """ Update and render colors
+        """
         if(self.delay):
             time.sleep(self.delay)
         c = ChromaColor(r*self.coef,g*self.coef,b*self.coef)
@@ -63,6 +71,8 @@ class RazerController():
         self.app.Headset.setStatic(color=c)
 
     def rainbow(self, step):
+        """ Loop on a rainbow effect
+        """
         r=0xff
         g=0
         b=0
@@ -85,6 +95,8 @@ class RazerController():
         self.coef = coef
 
 if(__name__=="__main__"):
+    """ This package is not meant to be used directly, so this part is only for testing purpose
+    """
     import argparse
 
     parser = argparse.ArgumentParser(description='RGB Keyboard CLI')
