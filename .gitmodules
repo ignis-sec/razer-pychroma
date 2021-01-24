@@ -1,0 +1,3 @@
+[submodule "chromasdk"]
+	path = chromasdk
+	url = https://github.com/FlameOfIgnis/better-chroma-python
