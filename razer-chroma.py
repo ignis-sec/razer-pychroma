@@ -1,6 +1,7 @@
 
 from chromasdk.ChromaPython import ChromaApp, ChromaAppInfo, ChromaColor, Colors, ChromaGrid
-
+from aud_razer import AudioVisualizer as RazerAudioVisualizer
+import asyncio
 
 import allogate as logging
 import time
@@ -64,9 +65,22 @@ class RazerController():
     def update_color(self, r, g, b):
         """ Update and render colors
         """
+        logging.pprint(f"setting color to {r},{g},{b}", 5)
         if(self.delay):
             time.sleep(self.delay)
-        c = ChromaColor(r*self.coef,g*self.coef,b*self.coef)
+        r= int(r*self.coef)
+        g= int(g*self.coef)
+        b= int(b*self.coef)
+
+
+        if(r>255): r=255
+        if(g>255): g=255
+        if(b>255): b=255
+
+        if(r<0): r=0
+        if(g<0): g=0
+        if(b<0): b=0
+        c = ChromaColor(r,g,b)
         self.app.Mouse.setStatic(color=c)
         self.app.Headset.setStatic(color=c)
 
@@ -100,18 +114,29 @@ if(__name__=="__main__"):
     import argparse
 
     parser = argparse.ArgumentParser(description='RGB Keyboard CLI')
-    parser.add_argument("-v","--verbose", action="count", help="Set verbosity level")
-    parser.add_argument("-c","--color", help="Lighting Mode")
+    parser.add_argument("-v", "--verbose", action="count", help="Set verbosity level")
+    parser.add_argument("-c", "--color", help="Lighting Mode")
+    parser.add_argument("-a", "--audio", action="store_true", help="Audio mode")
     args = parser.parse_args() 
 
     logging.VERBOSITY=0
     if args.verbose:
         logging.VERBOSITY=int(args.verbose)
     
-    controller = RazerController(delay=0.01)
+    controller = RazerController(delay=None)
 
     logging.pprint("Setting device colors.", 1)
     
+    if(args.audio):
+        controller.set(255,255,0)
+        visualizer = RazerAudioVisualizer(controller)
+        asyncio.run(visualizer.visualize())
+
+    
+
+
+
+
     controller.fade(0,0,0, 5)
     controller.fade(255,255,0, 5)
     controller.fade(0,255,255, 5)

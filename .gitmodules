@@ -1,3 +1,6 @@
 [submodule "chromasdk"]
 	path = chromasdk
 	url = https://github.com/FlameOfIgnis/better-chroma-python
+[submodule "audio_loopback"]
+	path = audio_loopback
+	url = https://github.com/FlameOfIgnis/audio_loopback
