@@ -1,7 +1,7 @@
 
 import math
 import asyncio
-from audio_loopback.audio_loopback import AudioController
+from .audio_loopback.audio_loopback import AudioController
 import allogate as logging
 
 class AudioVisualizer:
@@ -45,6 +45,9 @@ class AudioVisualizer:
         self.chroma_app.coef = (data[4]-self.dampen)/(self.ceiling - self.dampen)
         if(self.chroma_app.coef<self.ambient_brightness_coef): self.chroma_app.coef=self.ambient_brightness_coef
         self.chroma_app.update_color(self.chroma_app.r,self.chroma_app.g,self.chroma_app.b)
+
+    async def change_color(self, r,g,b):
+        self.chroma_app.fade(r,g,b)
         
     async def visualize(self, falloff=0.8):
         """ Loop visualizeOnce infinitely
