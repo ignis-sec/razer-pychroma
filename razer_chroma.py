@@ -1,6 +1,6 @@
 
 from .chromasdk.ChromaPython import ChromaApp, ChromaAppInfo, ChromaColor, Colors, ChromaGrid
-from .aud_razer import AudioVisualizer as RazerAudioVisualizer
+from .aud_razer import RazerAudioVisualizer
 import asyncio
 
 import allogate as logging
@@ -63,6 +63,7 @@ class RazerController():
                 self.app.Headset.setStatic(c)
 
     def update_color(self, r, g, b):
+        
         """ Update and render colors
         """
         logging.pprint(f"setting color to {r},{g},{b}", 5)
