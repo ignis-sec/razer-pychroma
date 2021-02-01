@@ -32,27 +32,13 @@ class RazerController():
         self.b = b
         self.update_color(self.r, self.g, self.b)
 
-    def fade(self,r,g,b, step=1):
+    def fade(self,r,g,b):
         """ Fade from current color to target, gradually
         """
-        logging.pprint(f"Fading to {r},{g},{b} from {self.r},{self.g},{self.b}", 5)
-        while True:
-            logging.pprint(f"Fading to {r},{g},{b} from {self.r},{self.g},{self.b}", 5)
-            if(abs(self.r-r)<step): self.r=r
-            if(r>self.r): self.r+=step
-            elif(r<self.r): self.r-=step
-
-            if(abs(self.r-r)<step): self.g=g
-            if(g>self.g):self.g+=step
-            elif(g<self.g): self.g-=step
-            
-            if(abs(self.r-r)<step): self.b=b
-            if(b>self.b):self.b+=step
-            elif(b<self.b): self.b-=step
-
-            self.update_color(self.r, self.g, self.b)
-            if(r == self.r and g == self.g and b==self.b): return
-
+        self.r = r
+        self.g = g
+        self.b = b 
+        
     def wave(self):
         """ Simple wave effect
         """
